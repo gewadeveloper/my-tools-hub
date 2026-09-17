@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "My Tool Hub"
+description = "A fast, professional collection of free online tools for everyday calculations, text tasks, conversions, generators, and utilities."
+version = "1.0.0"
+id = "artifacts/my-tool-hub"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21512
+
+[services.development]
+run = "pnpm --filter @workspace/my-tool-hub run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/my-tool-hub", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/my-tool-hub/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21512"
+BASE_PATH = "/"
